@@ -1,0 +1,36 @@
+.root {
+    -fx-font-size: 14px;
+    -fx-font-family: sans-serif;
+    -fx-background-color: #686256;
+	}
+
+.label {
+    -fx-text-fill: #fbefcc;
+    -fx-background-color:#686256;
+    -fx-padding:10px;
+    }
+    
+ .button {
+  	 -fx-text-fill: "white";
+  	 -fx-background-color:#686256;
+  	 -fx-padding:10px;
+	}
+
+  #header{
+  	-fx-font-size: 28px;
+  }
+  #rightLabel{
+  	-fx-font-size: 14px;
+  	-fx-pref-width:500px;
+  	-fx-padding: 40 20 20 20;
+  }
+  .radio-button{
+  	-fx-padding:5px;
+  }
+  #radioButtons{
+  	-fx-padding: 0 20 0 20;
+  }
+  #textarea {
+	-fx-background-color: #686256;
+
+ }
