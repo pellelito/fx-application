@@ -1,5 +1,7 @@
 package com.mediabibliotek;
 
+import java.awt.MouseInfo;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -45,8 +47,8 @@ public class GUI extends Application {
 	Button borrowButton;
 	Button sortButton;
 
-	ListView<String> theTextArea;
-	Label rightLabel;
+	public ListView<String> theTextArea;
+	public Label rightLabel;
 	String userName;
 	
 	// Radio buttons   
@@ -129,6 +131,7 @@ public class GUI extends Application {
 	public void setTheTextArea(String addText){
 		//System.out.println(addText);
 		theTextArea.getItems().add(addText);
+
 	}
 	
 	// starts the app
@@ -147,11 +150,11 @@ public class GUI extends Application {
 
 	public Scene createScene() {
 				//variables
-//				theController = new LibraryController(this);
-//				
-				/* //login function
-				userName = getValueFromUser();		
-				login(userName); */
+				theController = new LibraryController(this);
+				
+				//login function
+//				userName = getValueFromUser();		
+//				login(userName);
 			
 				//layout
 			
@@ -228,6 +231,7 @@ public class GUI extends Application {
 				searchButton = new Button("Search");
 				searchButton.setOnAction(event -> {
 					startSearch();
+					//System.out.println(theTextArea.getItems());
 				});
 				
 				theTextArea = new ListView<String>();

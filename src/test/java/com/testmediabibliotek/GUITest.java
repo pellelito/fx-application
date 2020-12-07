@@ -4,6 +4,14 @@
 package com.testmediabibliotek;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,9 +20,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.collections.ArrayList;
+import com.collections.List;
 import com.mediabibliotek.GUI;
+import com.mediabibliotek.LibraryController;
 
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+
 import net.sourceforge.marathon.javadriver.JavaDriver;
 import net.sourceforge.marathon.javadriver.JavaProfile;
 import net.sourceforge.marathon.javadriver.JavaProfile.LaunchMode;
@@ -22,7 +35,8 @@ import net.sourceforge.marathon.javadriver.JavaProfile.LaunchType;
 
 public class GUITest extends JavaFXTest {
 	private WebDriver driver;
-
+	private GUI stage = new GUI();
+	private LibraryController lc = new LibraryController();
 	@Before
 	public void setup() {
 		JavaProfile profile = new JavaProfile(LaunchMode.EMBEDDED);
@@ -36,34 +50,69 @@ public class GUITest extends JavaFXTest {
 	}
 
 	 @Test
-	public void loginSuccess() throws InterruptedException {
-//		WebElement user = driver.findElement(By.cssSelector("text-field"));
-//		WebElement password = driver.findElement(By.cssSelector("password-field"));
-//		WebElement loginButton = driver.findElement(By.cssSelector("button[text='Login']"));
-//		user.sendKeys("JavaFX2");
-//		password.sendKeys("password");
-//		loginButton.click();
-//		WebElement messageLabel = driver.findElement(By.id("message"));
-//		assertEquals("Congratulations!", messageLabel.getText());
-		 assertEquals(1,1);
+	public void testSearch() throws InterruptedException {
+		WebElement search = driver.findElement(By.cssSelector("text-field"));
+		WebElement searchButton = driver.findElement(By.cssSelector("button[text='Search']"));
+		search.sendKeys("nil");
+		searchButton.click();
+		assertNotNull(stage.theTextArea.getItems());
 	}
-
+	
+	 @Test
+		public void testItemClicked() throws InterruptedException, AWTException {
+		 	WebElement search = driver.findElement(By.cssSelector("text-field"));
+			WebElement searchButton = driver.findElement(By.cssSelector("button[text='Search']"));
+			search.sendKeys("nil");
+			searchButton.click();
+			Robot bot = new Robot();
+			  bot.mouseMove(780, 240);    
+			  bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			  bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			assertTrue(stage.rightLabel.getText().isEmpty());
+		}
+	 
 	@Test
-	public void loginFail() throws InterruptedException {
-//		WebElement user = driver.findElement(By.cssSelector("text-field"));
-//		WebElement password = driver.findElement(By.cssSelector("password-field"));
-//		WebElement loginButton = driver.findElement(By.cssSelector("button[text='Login']"));
-//		user.sendKeys("JavaFX2");
-//		password.sendKeys("secret");
-//		loginButton.click();
-//		WebElement messageLabel = driver.findElement(By.id("message"));
-//		assertEquals("Incorrect user or pw.", messageLabel.getText());
-		assertEquals(2,2);
+	public void testSearchBorrowed() throws InterruptedException {
+		WebElement searchBorrowedButton = driver.findElement(By.cssSelector("button[text='Search Borrowed']"));
+		searchBorrowedButton.click();
+		assertNotNull(stage.theTextArea.getItems());
 	} 
-
+	
+	@Test
+	public void testClearTextArea() throws InterruptedException {
+		WebElement search = driver.findElement(By.cssSelector("text-field"));
+		WebElement searchButton = driver.findElement(By.cssSelector("button[text='Search']"));
+		search.sendKeys("nil");
+		searchButton.click();
+		stage.clearTheTextArea();
+		assertTrue(stage.theTextArea.getItems().isEmpty());
+	}
+	
+	@Test
+	public void testCheckUserInput( ) {	
+		assertTrue(lc.checkUserInput("kalle"));		
+		}
+	
+	@Test
+	public void testCheckInputOnlyDigits( ) {
+		assertTrue(lc.checkInputOnlyDigits("88888"));	
+		}
+	
+	@Test
+	public void testCheckIfBorrowerExist() {
+		// 730421-7777
+		assertTrue(lc.checkIfBorrowerExist("730421-7777"));	
+	}
+	
+	@Test 
+	public void testGetMedia() {
+		// 399898
+		assertNotNull(lc.getMedia("399898"));
+	} 
+	
 	@Override
 	protected Scene getScene() {
-		GUI stage = new GUI();
+		
 		return stage.createScene();
 	}
 }
