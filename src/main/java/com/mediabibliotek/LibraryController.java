@@ -3,8 +3,11 @@ package com.mediabibliotek;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.Collections;
+//import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -17,7 +20,7 @@ import com.collections.*;
  * Controller klassen för applikationen som sköter all logik i Bibliotekssystemet. 
  */
 
-public class LibraryController implements Comparator<Media> 
+public class LibraryController
 {
 	Borrower currentBorrower;
 	GUI theGUI;
@@ -361,7 +364,7 @@ public class LibraryController implements Comparator<Media>
 			
 			//method for sorting list by title
 			System.out.println("Sort asc");
-			//Collections.sort(mediaSearchResults,new Comparator());
+			//Collections.sort(() mediaSearchResults);
 			
 
 		} 
@@ -617,19 +620,6 @@ public class LibraryController implements Comparator<Media>
 		}
 		
 		
-		
-	}
-
-	@Override
-	public int compare(Media o1, Media o2) {
-		String title1 = o1.getTitle().toUpperCase();
-		   String title2 = o2.getTitle().toUpperCase();
-
-		   //ascending order
-		   return title1.compareTo(title2);
-
-		   //descending order
-		   //return StudentName2.compareTo(StudentName1);
 		
 	}
 

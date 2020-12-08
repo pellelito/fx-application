@@ -49,7 +49,7 @@ public class GUI extends Application {
 
 	public ListView<String> theTextArea;
 	public Label rightLabel;
-	String userName;
+	String userName = "821223-6666";
 	
 	// Radio buttons   
 	RadioButton radioAll; 
@@ -63,7 +63,7 @@ public class GUI extends Application {
 	
 	public String getValueFromUser() {
 		
-        TextInputDialog dialog = new TextInputDialog("821223-6666"); //Change this to XXXXXX-XXXX
+        TextInputDialog dialog = new TextInputDialog("821223-6666"); //change to xxxxxx-xxxx
 
         dialog.setTitle("Login");
        
@@ -153,8 +153,8 @@ public class GUI extends Application {
 				theController = new LibraryController(this);
 				
 				//login function
-//				userName = getValueFromUser();		
-//				login(userName);
+				//userName = getValueFromUser();		
+				login(userName);
 			
 				//layout
 			

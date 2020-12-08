@@ -14,7 +14,6 @@ public abstract class Media implements Comparable
 	int year;
 	boolean borrowed=false;
 	
-	
 	/**
 	 * @param mediaType. Sätter mediatypen, Bok eller DVD
 	 * @param title. Sätter titeln till median

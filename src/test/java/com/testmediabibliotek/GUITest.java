@@ -3,16 +3,10 @@
  */
 package com.testmediabibliotek;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,14 +14,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.collections.ArrayList;
-import com.collections.List;
 import com.mediabibliotek.GUI;
 import com.mediabibliotek.LibraryController;
 
+import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-
+import javafx.scene.input.MouseButton;
+import javafx.scene.robot.Robot;
 import net.sourceforge.marathon.javadriver.JavaDriver;
 import net.sourceforge.marathon.javadriver.JavaProfile;
 import net.sourceforge.marathon.javadriver.JavaProfile.LaunchMode;
@@ -48,8 +41,14 @@ public class GUITest extends JavaFXTest {
 	public void teardown() {
 		driver.quit();
 	}
-
-	 @Test
+	
+	@Test
+	public void testLogin() {
+		
+		stage.login("821223-6666"); //throws IlligalStateException Not on FX application thread if wrong user SSN
+	
+	}
+	@Test
 	public void testSearch() throws InterruptedException {
 		WebElement search = driver.findElement(By.cssSelector("text-field"));
 		WebElement searchButton = driver.findElement(By.cssSelector("button[text='Search']"));
@@ -64,10 +63,15 @@ public class GUITest extends JavaFXTest {
 			WebElement searchButton = driver.findElement(By.cssSelector("button[text='Search']"));
 			search.sendKeys("nil");
 			searchButton.click();
-			Robot bot = new Robot();
-			  bot.mouseMove(780, 240);    
-			  bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-			  bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+			
+			Platform.runLater(new Runnable(){
+				@Override
+				public void run() {
+					Robot bot = new Robot();
+					bot.mouseMove(780, 240);    
+					bot.mouseClick(MouseButton.PRIMARY);
+				}
+				});
 			assertTrue(stage.rightLabel.getText().isEmpty());
 		}
 	 
@@ -108,7 +112,7 @@ public class GUITest extends JavaFXTest {
 	public void testGetMedia() {
 		// 399898
 		assertNotNull(lc.getMedia("399898"));
-	} 
+	}
 	
 	@Override
 	protected Scene getScene() {
